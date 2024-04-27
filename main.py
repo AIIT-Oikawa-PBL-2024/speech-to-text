@@ -6,7 +6,12 @@ import os
 import time
 import gc
 import torch
+import logging
 
+
+# ログ出力
+logging.basicConfig(level=logging.INFO, filename="info.log",
+                    format="%(asctime)s %(levelname)s:%(name)s:%(message)s")
 
 load_dotenv()
 hugging_face_token = os.getenv("HUGGING_FACE_TOKEN")
@@ -115,9 +120,6 @@ def save_result(result, video_file):
 
 
 # メイン関数
-import logging
-logging.basicConfig(level=logging.INFO)
-
 def main():
     start_time = time.time()
     for video_file in tqdm(video_files):
