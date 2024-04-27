@@ -7,11 +7,8 @@ import time
 import gc
 import torch
 import logging
+import ffmpeg
 
-
-# ログ出力
-logging.basicConfig(level=logging.INFO, filename="info.log",
-                    format="%(asctime)s %(levelname)s:%(name)s:%(message)s")
 
 load_dotenv()
 hugging_face_token = os.getenv("HUGGING_FACE_TOKEN")
@@ -25,8 +22,10 @@ def get_speaker_count(prompt):
         except ValueError:
             print("Invalid input. Please enter a number.")
 
+
 MIN_SPEAKER = get_speaker_count("最少の参加者数を入力: ")
 MAX_SPEAKER = get_speaker_count("最多の参加者数を入力: ")
+
 
 # dataフォルダを作成
 if not os.path.isdir("data"):
@@ -35,6 +34,20 @@ if not os.path.isdir("data"):
 if not os.path.isdir("model_dir"):
     os.mkdir("model_dir")
 
+# logsフォルダとinfo.logファイルを作成
+if not os.path.isdir("logs"):
+    os.mkdir("logs")
+    with open("./logs/info.log", mode="w") as f:
+        f.write("")
+
+
+# ログ出力
+logging.basicConfig(
+    level=logging.INFO,
+    filename="./logs/info.log",
+    format="%(asctime)s %(levelname)s:%(name)s:%(message)s",
+)
+
 
 # フォルダ内のmp4ファイルをすべて取得
 files = os.listdir("data")
@@ -42,17 +55,23 @@ video_files = []
 for file in files:
     if file.endswith(".mp4"):
         video_files.append(os.path.join("data", file))
+        # 動画の情報を取得
+        probe = ffmpeg.probe(os.path.join("data", file))
+        duration = probe["format"]["duration"]
+        logging.info(f"Duration of {file}: {duration} seconds")
 
 
 # モデルの読み込み
 device = "cuda"
+# device = "cpu"  # use this if no GPU available
+
 batch_size = 16  # reduce if low on GPU mem
 compute_type = (
     "float16"  # change to "int8" if low on GPU mem (may reduce accuracy)
 )
 
 # 1. Transcribe with original whisper (batched)
-# model = whisperx.load_model("large-v2", device, compute_type=compute_type)
+# model = whisperx.load_model("large-v3", device, compute_type=compute_type)
 
 # save model to local path (optional)
 model_dir = "model_dir"
@@ -130,8 +149,10 @@ def main():
             max_speakers=MAX_SPEAKER,
         )
         save_result(result, video_file)
+        logging.info(f"処理時間: {time.time() - start_time:.2f} seconds")
     logging.info("All done!")
-    logging.info(f"Total time: {time.time() - start_time:.2f} seconds")
+    print("All done!")
+
 
 if __name__ == "__main__":
     main()
