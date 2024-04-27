@@ -4,6 +4,9 @@ data/
 # model_dir
 model_dir/
 
+# logs
+logs/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
