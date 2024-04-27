@@ -21,7 +21,7 @@ compute_type = "float16"
 ## 話者分離
 
 .env.sample ファイルを.env ファイルに書き換える
-https://huggingface.co/settings/tokens　に登録してトークン取得
+[Register and obtain a token at Hugging Face](https://huggingface.co/settings/tokens)　に登録してトークン取得
 HUGGING_FACE_TOKEN=トークンを入力
 
 ## 話者の数を入力
