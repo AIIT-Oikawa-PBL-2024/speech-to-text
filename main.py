@@ -13,14 +13,15 @@ hugging_face_token = os.getenv("HUGGING_FACE_TOKEN")
 
 
 # スピーカー数を入力
-while True:
-    try:
-        MIN_SPEAKER = int(input("最少の参加者数を入力: "))
-        MAX_SPEAKER = int(input("最多の参加者数を入力: "))
-        break
-    except ValueError:
-        print("Invalid input. Please enter a number.")
+def get_speaker_count(prompt):
+    while True:
+        try:
+            return int(input(prompt))
+        except ValueError:
+            print("Invalid input. Please enter a number.")
 
+MIN_SPEAKER = get_speaker_count("最少の参加者数を入力: ")
+MAX_SPEAKER = get_speaker_count("最多の参加者数を入力: ")
 
 # dataフォルダを作成
 if not os.path.isdir("data"):
