@@ -115,6 +115,9 @@ def save_result(result, video_file):
 
 
 # メイン関数
+import logging
+logging.basicConfig(level=logging.INFO)
+
 def main():
     start_time = time.time()
     for video_file in tqdm(video_files):
@@ -125,9 +128,8 @@ def main():
             max_speakers=MAX_SPEAKER,
         )
         save_result(result, video_file)
-    print("All done!")
-    print(f"Total time: {time.time() - start_time:.2f} seconds")
-
+    logging.info("All done!")
+    logging.info(f"Total time: {time.time() - start_time:.2f} seconds")
 
 if __name__ == "__main__":
     main()
