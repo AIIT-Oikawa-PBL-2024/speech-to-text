@@ -15,8 +15,8 @@ https://huggingface.co/openai/whisper-large-v3
 
 ## CPU 利用の場合(main.py を修正)
 
-evice="cpu"
-compute_type = "int8"
+device="cpu"
+compute_type = "float16"
 
 ## 話者分離
 
