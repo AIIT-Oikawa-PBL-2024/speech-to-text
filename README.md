@@ -5,7 +5,7 @@
 ## whisperX
 
 モデルのセットアップ方法<br>
-https://github.com/m-bain/whisperX<br>
+[WhisperX GitHub Repository](https://github.com/m-bain/whisperX)<br>
 単語レベルのタイムスタンプと話者ダイアリゼーションによる高速自動音声認識<br>
 
 ## whisper モデル
