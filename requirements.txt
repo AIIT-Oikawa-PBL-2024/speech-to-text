@@ -144,7 +144,7 @@ torch-pitch-shift==1.2.4
 torchaudio==2.1.2
 torchmetrics==1.3.2
 torchvision==0.16.2
-tornado==6.4
+tornado==6.4.1
 tqdm==4.66.2
 transformers==4.39.3
 triton==2.1.0
